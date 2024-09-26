@@ -31,7 +31,15 @@ public class BallMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Paddle")
+    
+        if (collision.gameObject.name == "Paddle" || collision.gameObject.CompareTag("Brick"))
+
+        {
+            direction.y = -direction.y;
+        }
+        
+        if (collision.gameObject.name == "TopPaddle" || collision.gameObject.CompareTag("Brick"))
+
         {
             direction.y = -direction.y;
         }
