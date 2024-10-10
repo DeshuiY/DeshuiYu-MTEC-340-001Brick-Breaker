@@ -9,11 +9,13 @@ public class PaddleBehavior : MonoBehaviour
     [SerializeField] private KeyCode _leftKey;
     [SerializeField] private KeyCode _rightKey;
     
+    private AudioSource _audioSource;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,6 +31,18 @@ public class PaddleBehavior : MonoBehaviour
 
         {
             transform.position += new Vector3(_speed * Time.deltaTime, 0, 0);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            if (_audioSource != null)
+            {
+                _audioSource.Play();
+            }
         }
     }
 }

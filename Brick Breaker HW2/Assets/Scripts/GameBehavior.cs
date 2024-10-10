@@ -21,6 +21,9 @@ public class GameBehavior : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _scoreTextUI;
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private AudioClip pauseSound;
+    
+    private AudioSource _audioSource;
 
     public enum GameState
     {
@@ -41,6 +44,12 @@ public class GameBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void UpdateScoreUI()
@@ -71,10 +80,21 @@ public class GameBehavior : MonoBehaviour
         gameState = GameState.Paused;
         Time.timeScale = 0;
         pauseMenuUI.SetActive(true);
+
+        if (_audioSource != null && pauseSound != null)
+        {
+            _audioSource.PlayOneShot(pauseSound);
+        }
     }
 
     void ResumeGame()
     {
+
+        if (_audioSource != null && pauseSound != null)
+        {
+            _audioSource.PlayOneShot(pauseSound);
+        }
+
         gameState = GameState.Playing;
         Time.timeScale = 1;
         pauseMenuUI.SetActive(false);

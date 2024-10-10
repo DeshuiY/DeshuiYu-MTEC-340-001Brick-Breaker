@@ -4,11 +4,27 @@ using UnityEngine;
 
 public class BrickBehavior : MonoBehaviour
 {
+    private AudioSource _audioSource;
+
+    private void Start()
+
+    {
+        
+        _audioSource = GetComponent<AudioSource>();
+    }
+    
+    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ball")
         {
-         
+
+            if (_audioSource != null)
+            {
+                _audioSource.Play();
+            }
+
             float xDistance = Mathf.Abs(transform.position.x - collision.transform.position.x);
             float yDistance = Mathf.Abs(transform.position.y - collision.transform.position.y);
             
@@ -21,7 +37,7 @@ public class BrickBehavior : MonoBehaviour
                 collision.gameObject.GetComponent<BallBehavior>().ReverseYDirection();
             }
            
-            Destroy(gameObject);
+            Destroy(gameObject, _audioSource.clip.length);
             
             if (GameBehavior.Instance != null)
             {
@@ -29,13 +45,12 @@ public class BrickBehavior : MonoBehaviour
             }
         }
     }
+    
+    
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   
 
     // Update is called once per frame
     void Update()

@@ -11,10 +11,13 @@ public class BallBehavior : MonoBehaviour
 
     private Vector2 _direction;
     
+    private AudioSource _audioSource;
+    
     
     // Start is called before the first frame update
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         ResetBall();
     }
 
@@ -58,6 +61,13 @@ public class BallBehavior : MonoBehaviour
     void ResetBall()
 
     {
+
+        if (_audioSource != null)
+
+        {
+            _audioSource.Play();
+        }
+
         transform.position = Vector3.zero;
         
         _direction = new Vector2(Random.value > 0.5f? 1 : -1, Random.value > 0.5f? 1 : -1);
