@@ -8,6 +8,8 @@ TagManager:
   - Paddle
   - Ball
   - Boundaries
+  - SideWalls
+  - Pause
   layers:
   - Default
   - TransparentFX

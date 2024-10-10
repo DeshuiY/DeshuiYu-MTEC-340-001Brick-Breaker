@@ -23,22 +23,14 @@ public class BallBehavior : MonoBehaviour
     {
         transform.position += new Vector3(_speed * _direction.x, _speed * _direction.y,0.0f) * Time.deltaTime;
 
-        if (Mathf.Abs(transform.position.y) >= _yLimit)
-        {
-            _direction.y *= -1;
-        }
-
-        if (Mathf.Abs(transform.position.x) >= _xLimit)
-        {
-            _direction.x *= -1;
-        }
-        
+    
         if (transform.position.y <= _bottomLimit)
         {
             ResetBall();
         }
     }
 
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Paddle"))
@@ -55,7 +47,7 @@ public class BallBehavior : MonoBehaviour
             
         }
         
-        if (other.gameObject.CompareTag("Boundaries"))
+        if (other.gameObject.CompareTag("SideWalls"))
         {
             _direction.x *= -1;
             
@@ -69,6 +61,16 @@ public class BallBehavior : MonoBehaviour
         transform.position = Vector3.zero;
         
         _direction = new Vector2(Random.value > 0.5f? 1 : -1, Random.value > 0.5f? 1 : -1);
+    }
+
+    public void ReverseXDirection()
+    {
+        _direction.x *= -1;
+    }
+
+    public void ReverseYDirection()
+    {
+        _direction.y *= -1;
     }
 
 

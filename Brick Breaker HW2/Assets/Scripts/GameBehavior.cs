@@ -5,12 +5,9 @@ using UnityEngine;
 
 public class GameBehavior : MonoBehaviour
 {
- 
     public static GameBehavior Instance { get; private set; }
 
-
     private int _score;
-
 
     public int Score
     {
@@ -23,10 +20,18 @@ public class GameBehavior : MonoBehaviour
     }
 
     [SerializeField] private TextMeshProUGUI _scoreTextUI;
+    [SerializeField] private GameObject pauseMenuUI;
+
+    public enum GameState
+    {
+        Playing,
+        Paused
+    }
+
+    public GameState gameState = GameState.Playing;
 
     private void Awake()
     {
-        // Singleton pattern implementation
         if (Instance == null)
         {
             Instance = this;
@@ -46,15 +51,32 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (gameState == GameState.Playing)
+            {
+                PauseGame();
+            }
+            else if (gameState == GameState.Paused)
+            {
+                ResumeGame();
+            }
+        }
+    }
+
+    void PauseGame()
+    {
+        gameState = GameState.Paused;
+        Time.timeScale = 0;
+        pauseMenuUI.SetActive(true);
+    }
+
+    void ResumeGame()
+    {
+        gameState = GameState.Playing;
+        Time.timeScale = 1;
+        pauseMenuUI.SetActive(false);
     }
 }
